@@ -1,3 +1,185 @@
+//file create 
+const http = require('http');
+const data = require('./data');
+const fs = require('fs');
+fs.writeFileSync('hello.txt','Hello everyone you');
+const { json } = require('stream/consumers');
+http.createServer((res,resp) => {
+    resp.writeHead(200,{'Content-Type':'application\json'});
+    resp.write(JSON.stringify(data));
+    resp.end();
+}).listen(6060);
+
+
+//file unlink 
+const http = require('http');
+const data = require('./data');
+const fs = require('fs');
+// fs.writeFileSync('hello.txt','Hello everyOne');
+// http.createServer((req,resp) =>{
+//     resp.writeHead(200,{'Content-Type':'application\json'});
+//     resp.write(JSON.stringify(data));
+//     resp.end();
+// }).listen(5000);
+// console.log(process.argv[2]);
+const input = process.argv;
+// fs.writeFileSync(input[2],input[3]);
+if(input[2] == 'add'){
+    fs.writeFileSync(input[3],input[4]);
+}else if(input[2] == 'remove'){
+    fs.unlinkSync(input[3]);
+}else{
+    console.log('invailid argument');
+}
+
+
+
+// const { dir } = require('console');
+// const fs = require('fs');
+// const path = require('path');
+
+// file path and file create , get 
+
+// const dirPath = path.join(__dirname,'files');
+// // console.log(dirPath);
+// for(i=0; i<5;i++){
+//     fs.writeFileSync(dirPath+"/hello"+i+".txt",'Hello this is a file');
+// }
+// fs.readdir(dirPath,(err,files) => {
+//     files.forEach((item)=>{
+//         console.log(item);
+//     });
+// });
+
+
+// turminal se input data and get 
+
+// const input = process.argv;
+// if(input[2] == 'add'){
+//     fs.writeFileSync(input[3],input[4]);
+// }else if(input[2] == 'remove'){
+//     fs.unlinkSync(input[3]);
+// }else{
+//     console.log('invailid input');
+// }
+// fs.writeFileSync('apple.txt','this is a apple file');
+
+// crud operation and file name rename 
+
+// const fs = require('fs');
+// const path = require('path');
+// const basePath = path.join(__dirname,'crud');
+// const fileName = `${basePath}/test.txt`;
+// // fs.writeFileSync(fileName,'hello everyone, this is a test file create in nodejs');
+// fs.readFile(fileName,'utf8',(err,item) => {
+//     console.log(item);
+// });
+
+// fs.appendFile(fileName,' and this is a test.txt',(err) => {
+//     if(!err) console.log('file update successfully');
+// })
+
+// fs.rename(fileName,`${basePath}/fruit.txt`,(err) => {
+//     console.log('filename rename update succesfull');
+// });
+// fs.unlinkSync(`${basePath}/fruit.txt`);
+
+// asynchronous example 
+let a = 10;
+let b =0;
+
+let waitingData = new Promise((resolve,resect) => {
+    setTimeout(() => {
+        resolve(30);
+    }, 2000);
+});
+
+waitingData.then((data) => {
+    console.log(a+data);
+});
+
+//template ingine use
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const publicPath = path.join(__dirname,'public');
+
+// template engine using ejs
+// npm i rjs
+app.set('view engine','ejs','Java','Node','React');
+// app.use(express.static(publicPath));
+
+// remove for extention 
+
+app.get('',(req,res) =>{
+    res.sendFile(`${publicPath}/index.html`);
+});
+
+app.get('/profile',(res,resp) => {
+    const user = {
+        name:'Govind Patel',
+        email: 'ga@gmail.com',
+        city:'Prayagraj',
+        skills:['PHP','enj','C++']
+    }
+    resp.render('profile',{user});
+});
+
+app.get('/login',(req,res) => {
+    res.render('login');
+});
+
+app.get('/about',(req,res) => {
+    res.sendFile(`${publicPath}/about.html`);
+});
+
+app.get('/home',(req,res) =>{
+    res.sendFile(`${publicPath}/home.html`);
+})
+
+app.get('/help',(req,res) => {
+    res.sendFile(`${publicPath}/help.html`);
+});
+
+app.get('/*',(req,res) => {
+    res.sendFile(`${publicPath}/pageNotFound.html`);
+});
+// console.log(publicPath);
+
+// app.get('',(req,res) => {
+//     // res.send('Hello, This is a Home page');\
+//     res.send(`
+//         <h1> Hello This is a Home page</h1><a href="/about">Go to  About Page </a>
+//     `);
+// });
+
+// app.get('/about',(req,res) => {
+// //    res.send('Hi,This is a aboutus page');
+//     res.send(`
+//         <input type="text" placeholder="User name" value="${req.query.name}" />
+//         <button>Click Me</button>
+//         <a href="/">Go to back Home page </a>
+//     `);
+// });
+
+// app.get('/help',(req,res) => {
+//     // res.send('Hello,This is a help page');
+//     res.send([{
+//         name:'Govind',
+//         email:'ga@gmailcom'
+//     },
+//     {
+//         name:'Gogo',
+//         email:'ag@gmailcom'
+//     }
+//     ]);
+// });
+
+
+
+app.listen(5000);
+
 
 //api crud 
 const express = require('express');
