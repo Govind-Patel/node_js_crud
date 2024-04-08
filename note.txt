@@ -1,0 +1,39 @@
+1. create index page
+2. npm i init 
+3. npm i colors
+4. npm i chalk 
+5. npm i nodemon
+6. npm i ejs (template engine )
+7. npm i express 
+8. npm i mongodb
+9. database conection 
+    const {mongoClient} = require('mongodb')
+    const url = 'mongodb://localhost:27017'
+    const client = new mongoClient(url);
+    async function dbConnect(){
+        let result =await client.connect();
+        let db = result.db('e-com');
+        let collection = db.collection('products);
+        let respose = await collection.find().toArray();
+    }
+    dbConnect();
+10. update data in database
+    new file create update.js
+    const dbConnect = require('./mongodb');
+
+    const updateData = async () => {
+        let data = await dbConnect();
+        let result =await data.updateMany(
+            { name: 'nokia 1' }, {
+            $set:{brand:'Nokia',price:550}
+            }
+        )
+        if(result.acknowledged){
+            console.log(result);
+        }
+    }
+    updateData();
+11 npm i mongoose
+12 image store cmd
+    npm i multer
+13. npm i mysql
